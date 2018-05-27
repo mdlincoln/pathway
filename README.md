@@ -3,6 +3,10 @@ pathway
 =======
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis-CI Build
+Status](https://travis-ci.org/mdlincoln/pathway.svg?branch=master)](https://travis-ci.org/mdlincoln/pathway)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/mdlincoln/pathway?branch=master&svg=true)](https://ci.appveyor.com/project/mdlincoln/pathway)
 
 pathway finds a pathway of observations between two points in a matrix.
 
