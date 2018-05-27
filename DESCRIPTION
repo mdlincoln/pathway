@@ -11,3 +11,5 @@ ByteCompile: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Imports: distances
+URL: https://github.com/mdlincoln/pathway
+BugReports: https://github.com/mdlincoln/pathway/issues
