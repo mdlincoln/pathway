@@ -68,8 +68,8 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
   if (n_unique < n) warning("Only ", n_unique, " unique intermediate points located. Try increasing k or decreasing n.")
 
   list(
-    ax = unname(artificial_vector),
-    match_indices = match_points
+    ax = artificial_vector,
+    match_indices = unname(match_points)
   )
 }
 
