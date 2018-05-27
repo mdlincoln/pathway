@@ -38,7 +38,7 @@ set.seed(34)
 m <- matrix(rnorm(1000), nrow = 500, ncol = 2)
 p1 <- 2L
 p2 <- 11L
-p <- matrix_pathway(m, p1, p2, k = 1L)
+p <- matrix_pathway(m, p1, p2, k = 3L)
 p
 
 plot_pathway(m, p)

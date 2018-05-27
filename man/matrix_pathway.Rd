@@ -26,10 +26,10 @@ returned by the search.}
 \value{
 A list with the following values
 \itemize{
-\item \code{ax} Generated matrix of \code{n} rows with the same number of columns as \code{x}
-\item \code{match_indices} Row indices of \code{x} indicating matched points
-\item \code{p1}
-\item \code{p2}
+\item \code{line} \code{n} points along a line between \code{p1} and \code{p2}.
+\item \code{i} Row indices of \code{x} indicating matched points.
+\item \code{ni} Indices of nearest neighbors in \code{x} found for for each point in \code{line}.
+\item \code{p1}, \code{p2} Inidices of points origially passed in.
 }
 }
 \description{

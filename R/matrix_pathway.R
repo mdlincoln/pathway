@@ -19,10 +19,10 @@
 #' @param ... Additional arguments passed to [distances::distance].
 #'
 #' @return A list with the following values
-#' * `ax` Generated matrix of `n` rows with the same number of columns as `x`
-#' * `match_indices` Row indices of `x` indicating matched points
-#' * `p1`
-#' * `p2`
+#' * `line` `n` points along a line between `p1` and `p2`.
+#' * `i` Row indices of `x` indicating matched points.
+#' * `ni` Indices of nearest neighbors in `x` found for for each point in `line`.
+#' * `p1`, `p2` Inidices of points origially passed in.
 #'
 #' @export
 #' @examples
@@ -70,8 +70,9 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
   if (n_unique < n) warning("Only ", n_unique, " unique intermediate points located. Try increasing k or decreasing n.")
 
   list(
-    ax = artificial_vector,
-    match_indices = unname(match_points),
+    line = artificial_vector,
+    i = unname(match_points),
+    ni = dm,
     p1 = p1,
     p2 = p2
   )
