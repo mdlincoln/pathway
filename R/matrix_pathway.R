@@ -24,6 +24,8 @@
 #' * `ni` Indices of nearest neighbors in `x` found for for each point in `line`.
 #' * `p1`, `p2` Inidices of points origially passed in.
 #'
+#' @import assertthat
+#'
 #' @export
 #' @examples
 #' set.seed(10)
@@ -32,19 +34,18 @@
 #' m[5,]
 #' matrix_pathway(m, 2L, 11L, k = 1L)
 matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
-  stopifnot(is.matrix(x))
-  stopifnot(is.numeric(x))
-  stopifnot(is.integer(p1))
-  stopifnot(is.integer(p2))
-  stopifnot(is.integer(n))
-  stopifnot(is.integer(k))
-  stopifnot(length(dim(x)) == 2)
-  stopifnot(!anyNA(x))
-  stopifnot(p1 != p2)
-  stopifnot(p1 <= nrow(x))
-  stopifnot(p2 <= nrow(x))
-  stopifnot(n >= 1)
-  stopifnot(n + 2 < nrow(x))
+  assert_that(is.matrix(x))
+  assert_that(is.numeric(x))
+  assert_that(is.count(p1))
+  assert_that(is.count(p2))
+  assert_that(is.count(n))
+  assert_that(is.count(k))
+  assert_that(length(dim(x)) == 2)
+  assert_that(!anyNA(x))
+  assert_that(p1 != p2, msg = "p1 and p2 must be different points")
+  assert_that(p1 <= nrow(x))
+  assert_that(p2 <= nrow(x))
+  assert_that(n + 2 < nrow(x), msg = "n must be larger than 2 + the number of matrix rows")
 
   # Generate an "ideal" vector of n points between p1 and p2
   artificial_vector <- ideal_points(a = x[p1,], b = x[p2,], n = n)
@@ -80,5 +81,6 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
 
 # Helper function to find points along a line between two points
 ideal_points <- function(a, b, n) {
+  stopifnot(length(a) == length(b))
   mapply(seq, a, b, MoreArgs = list(length.out = n + 2))[2:(n + 1),]
 }
