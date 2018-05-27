@@ -27,7 +27,9 @@ returned by the search.}
 A list with the following values
 \itemize{
 \item \code{ax} Generated matrix of \code{n} rows with the same number of columns as \code{x}
-\item \code{match_indices}
+\item \code{match_indices} Row indices of \code{x} indicating matched points
+\item \code{p1}
+\item \code{p2}
 }
 }
 \description{

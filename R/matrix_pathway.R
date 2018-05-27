@@ -20,7 +20,9 @@
 #'
 #' @return A list with the following values
 #' * `ax` Generated matrix of `n` rows with the same number of columns as `x`
-#' * `match_indices`
+#' * `match_indices` Row indices of `x` indicating matched points
+#' * `p1`
+#' * `p2`
 #'
 #' @export
 #' @examples
@@ -69,7 +71,9 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
 
   list(
     ax = artificial_vector,
-    match_indices = unname(match_points)
+    match_indices = unname(match_points),
+    p1 = p1,
+    p2 = p2
   )
 }
 
