@@ -9,13 +9,14 @@
 #' sampled from a larger range.
 #'
 #' @param x A two-dimensional numeric matrix.
-#' @param p1 Integer. Row index of point at the start of the path
-#' @param p2 Integer. Row index of point at the end of the path
-#' @param n Integer. Number of intervening points to find
+#' @param p1 Integer. Row index of point at the start of the path.
+#' @param p2 Integer. Row index of point at the end of the path.
+#' @param n Integer. Number of intervening points to find.
 #' @param k Integer. Number of nearest neighbors to locate for each point on the
 #'   ideal path, passed to [distances::nearest_neighbor_search] If `k > 1` then
 #'   one real point per `n` will be randomly sampled from the `k` points
 #'   returned by the search.
+#' @param ... Additional arguments passed to [distances::distance].
 #'
 #' @return A list with the following values
 #' * `ax` Generated matrix of `n` rows with the same number of columns as `x`
@@ -38,7 +39,7 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
   stopifnot(n + 2 < nrow(x))
 
   # Generate an "ideal" vector of n points between p1 and p2
-  artificial_vector <- mapply(seq, x[p1,], x[p2,], MoreArgs = list(length.out = n + 2))[2:(n + 1),]
+  artificial_vector <- ideal_points(a = x[p1,], b = x[p2,], n = n)
   artificial_indices <- seq(nrow(x) + 1, nrow(x) + n)
   unsearchable_indices <- c(p1, p2, artificial_indices)
 
@@ -52,7 +53,7 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
 
   # Sample one nearest neighbor for each point of the ideal vector
   if (k > 1) {
-    match_points <- unname(apply(dm, 2, sample, size = 1))
+    match_points <- apply(dm, 2, sample, size = 1)
   } else {
     match_points <- dm[1,]
   }
@@ -61,7 +62,12 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
   if (n_unique < n) warning("Only ", n_unique, " points located.")
 
   list(
-    ax = artificial_vector,
+    ax = unname(artificial_vector),
     match_indices = match_points
   )
+}
+
+# Helper function to find points along a line between two points
+ideal_points <- function(a, b, n) {
+  mapply(seq, a, b, MoreArgs = list(length.out = n + 2))[2:(n + 1),]
 }
