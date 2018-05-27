@@ -23,6 +23,12 @@
 #' * `match_indices`
 #'
 #' @export
+#' @examples
+#' set.seed(10)
+#' m <- matrix(runif(1000), nrow = 500, ncol = 2)
+#' m[2,]
+#' m[5,]
+#' matrix_pathway(m, 2L, 11L, k = 1L)
 matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
   stopifnot(is.matrix(x))
   stopifnot(is.numeric(x))
@@ -59,7 +65,7 @@ matrix_pathway <- function(x, p1, p2, n = 4L, k = 1L, ...) {
   }
 
   n_unique <- length(unique(match_points))
-  if (n_unique < n) warning("Only ", n_unique, " points located.")
+  if (n_unique < n) warning("Only ", n_unique, " unique intermediate points located. Try increasing k or decreasing n.")
 
   list(
     ax = unname(artificial_vector),

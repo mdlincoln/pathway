@@ -10,16 +10,18 @@ matrix_pathway(x, p1, p2, n = 4L, k = 1L, ...)
 \arguments{
 \item{x}{A two-dimensional numeric matrix.}
 
-\item{p1}{Integer. Row index of point at the start of the path}
+\item{p1}{Integer. Row index of point at the start of the path.}
 
-\item{p2}{Integer. Row index of point at the end of the path}
+\item{p2}{Integer. Row index of point at the end of the path.}
 
-\item{n}{Integer. Number of intervening points to find}
+\item{n}{Integer. Number of intervening points to find.}
 
 \item{k}{Integer. Number of nearest neighbors to locate for each point on the
 ideal path, passed to \link[distances:nearest_neighbor_search]{distances::nearest_neighbor_search} If \code{k > 1} then
 one real point per \code{n} will be randomly sampled from the \code{k} points
 returned by the search.}
+
+\item{...}{Additional arguments passed to \link[distances:distance]{distances::distance}.}
 }
 \value{
 A list with the following values
@@ -36,4 +38,11 @@ ideal path between them.
 By default \code{k} is 1, and will return the closest possible points to the ideal
 line between \code{p1} and \code{p2}. Setting k to a higher number will mean points are
 sampled from a larger range.
+}
+\examples{
+set.seed(10)
+m <- matrix(runif(1000), nrow = 500, ncol = 2)
+m[2,]
+m[5,]
+matrix_pathway(m, 2L, 11L, k = 1L)
 }
