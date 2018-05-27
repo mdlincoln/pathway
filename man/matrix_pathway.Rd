@@ -21,7 +21,7 @@ ideal path, passed to \link[distances:nearest_neighbor_search]{distances::neares
 one real point per \code{n} will be randomly sampled from the \code{k} points
 returned by the search.}
 
-\item{...}{Additional arguments passed to \link[distances:distance]{distances::distance}.}
+\item{...}{Additional arguments passed to \link[distances:distances]{distances::distances}.}
 }
 \value{
 A list with the following values

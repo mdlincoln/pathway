@@ -16,7 +16,7 @@
 #'   ideal path, passed to [distances::nearest_neighbor_search] If `k > 1` then
 #'   one real point per `n` will be randomly sampled from the `k` points
 #'   returned by the search.
-#' @param ... Additional arguments passed to [distances::distance].
+#' @param ... Additional arguments passed to [distances::distances].
 #'
 #' @return A list with the following values
 #' * `line` `n` points along a line between `p1` and `p2`.
