@@ -16,11 +16,24 @@ knitr::opts_chunk$set(
 
 # pathway
 
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
 pathway finds a pathway of observations between two points in a matrix.
+
+## Installation
+
+You can install pathway from GitHub with:
+
+```{r, eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("mdlincoln/pathway")
+```
 
 ## Example
 
-```{r}
+```{r pathway}
+library(pathway)
+
 set.seed(34)
 m <- matrix(rnorm(1000), nrow = 500, ncol = 2)
 p1 <- 2L
