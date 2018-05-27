@@ -2,3 +2,4 @@
 
 export(matrix_pathway)
 export(plot_pathway)
+import(assertthat)
