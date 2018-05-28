@@ -1,7 +1,7 @@
 ---
 output:
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -40,7 +40,7 @@ set.seed(34)
 m <- matrix(rnorm(1000), nrow = 500, ncol = 2)
 p1 <- 2L
 p2 <- 11L
-p <- matrix_pathway(m, p1, p2, k = 3L)
+p <- pathway(m, p1, p2, n = 5)
 p
 
 plot_pathway(m, p)
