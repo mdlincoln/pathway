@@ -4,12 +4,14 @@
 \alias{plot_pathway}
 \title{Plot calculated pathway over original data}
 \usage{
-plot_pathway(m, p)
+plot_pathway(m, p, pca = FALSE)
 }
 \arguments{
 \item{m}{Original matrix.}
 
 \item{p}{The results of \link{matrix_pathway}.}
+
+\item{pca}{Logical. Run PCA transform before plotting?}
 }
 \description{
 Plot calculated pathway over original data

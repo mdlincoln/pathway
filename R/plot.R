@@ -2,16 +2,31 @@
 #'
 #' @param m Original matrix.
 #' @param p The results of [matrix_pathway].
+#' @param pca Logical. Run PCA transform before plotting?
 #'
 #' @export
-plot_pathway <- function(m, p) {
-  if (ncol(m) > 2) warning("Only the first two data dimensions will be plotted")
+plot_pathway <- function(m, p, pca = FALSE) {
+  if (ncol(m) > 2) warning("Only the first two data dimensions will be plotted. Suggest setting pca = TRUE")
 
-  plot(m, col = "gray", pch = 20)
-  if (nrow(p$line) > 1)
-    points(p$line, pch = 4)
-  points(m[p$ni,], col = "pink", pch = 15)
-  points(m[p$i,], col = "red", pch = 16)
-  points(m[c(p$p1, p$p2),], col = "blue", pch = 15)
-  segments(x0 = m[p$p1,1], y0 = m[p$p1,2], x1 = m[p$p2,1], y1 = m[p$p2,2])
+  if (pca) {
+    prcm <- prcomp(rbind(m, p$line))
+    plot_m <- prcm$x[1:nrow(m), 1:2]
+    plot_line <- prcm$x[-(1:nrow(m)), 1:2]
+  } else {
+    plot_m <- m[,1:2]
+    plot_line <- p$line[,1:2]
+  }
+
+  plot_ni <- p$ni
+  plot_i <- p$i
+  p1 <- p$p1
+  p2 <- p$p2
+
+  plot(plot_m, col = "gray", pch = 20)
+  if (nrow(plot_line) > 1)
+    points(plot_line, pch = 4)
+  points(plot_m[c(p1, p2),], col = "blue", pch = 15)
+  points(plot_m[plot_ni,], col = "pink", pch = 15)
+  points(plot_m[plot_i,], col = "red", pch = 16)
+  lines(plot_m[c(p1, plot_i, p2),])
 }
