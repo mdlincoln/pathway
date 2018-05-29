@@ -32,7 +32,7 @@ navigate_ordered <- function(x, pi, p1, p2) {
   end <- min(p2, nrow(x))
   if (start < end) {
     following_points <- seq(from = start, to = end, by = 1)
-    res <- setdiff(following_points, c(p1, p2))
+    res <- as.integer(setdiff(following_points, c(p1, p2)))
     if (length(res > 0)) {
       return(res)
     }
