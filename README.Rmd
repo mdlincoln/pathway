@@ -45,3 +45,35 @@ p
 
 plot_pathway(m, p)
 ```
+
+It is also possible to place conditional restraints on the solution that `pathway` finds by using `navigate_` functions.
+For example, `navigate_unique` will not revisit the same point along a path, and `navigate_ordered` will only look at points that occurr in later rows in the matrix.
+
+```{r naviagte}
+p_ordered <- pathway(m, 5, 380, n = 5, navigator = navigate_ordered)
+plot_pathway(m, p_ordered)
+```
+
+To use your own predicate function, define a function that returns a vector of indices to search and call it with `navigator = navigate(f)`
+
+```{r custom_navigate}
+obs_types <- sample(c("setosa", "versicolor", "virginica"), 500, replace = TRUE)
+
+# A custom predicate function must take the original matrix, the list of
+# previously-selected pathway points, along with p1 and p2.
+different_species <- function(x, pi, p1, p2, obs_types) {
+  if (is.null(pi)) {
+    search_space <- 1:nrow(x)
+  } else {
+    # Only search observations that do not have the same species as the immediately previous one.
+    prev_type <- obs_types[tail(pi, 1)]
+    search_space <- which(obs_types != prev_type)
+  }
+  
+  # Don't forget to exclude p1 and p2
+  setdiff(search_space, c(p1, p2))
+}
+
+p_species <- pathway(m, p1, p2, n = 8, navigator = navigate(different_species, obs_types))
+obs_types[p_species$i]
+```
