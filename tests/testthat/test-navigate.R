@@ -3,7 +3,7 @@ context("navigate")
 set.seed(10)
 nr <- 20
 nc <- 5
-x <- matrix(rnorm(n * k), nrow = nr, ncol = nc)
+x <- matrix(rnorm(nr * nc), nrow = nr, ncol = nc)
 p1 <- 5
 p2 <- 12
 pi <- numeric(4)
