@@ -4,6 +4,8 @@
 #' @param p The results of [pathway].
 #' @param pca Logical. Run PCA transform before plotting?
 #'
+#' @import graphics
+#'
 #' @export
 plot_pathway <- function(m, p, pca = FALSE) {
 
