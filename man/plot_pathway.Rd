@@ -9,7 +9,7 @@ plot_pathway(m, p, pca = FALSE)
 \arguments{
 \item{m}{Original matrix.}
 
-\item{p}{The results of \link{matrix_pathway}.}
+\item{p}{The results of \link{pathway}.}
 
 \item{pca}{Logical. Run PCA transform before plotting?}
 }

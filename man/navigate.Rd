@@ -18,7 +18,7 @@ navigate_any(x, pi, p1, p2)
 \arguments{
 \item{.p}{A function that returns a vector of indices}
 
-\item{...}{}
+\item{...}{Additional arguments passed on to \code{.p}}
 
 \item{x}{The original matrix}
 
@@ -27,8 +27,6 @@ navigate_any(x, pi, p1, p2)
 \item{p1}{Start and end points used in \link{pathway}}
 
 \item{p2}{Start and end points used in \link{pathway}}
-
-\item{...}{Additional arguments passed on to \code{.p}}
 }
 \value{
 Integer. An integer vector of indices within \code{x} forming the search

@@ -17,12 +17,10 @@
 #' @param p1 Start and end points used in [pathway]
 #' @param p2 Start and end points used in [pathway]
 #' @param .p A function that returns a vector of indices
-#' @param ...
+#' @param ... Additional arguments passed on to `.p`
 #'
 #' @return Integer. An integer vector of indices within `x` forming the search
 #'   space for the next step of the nearest neighbor search.
-#'
-#' @param ... Additional arguments passed on to `.p`
 #'
 #' @export
 navigate <- function(.p, ...) {
