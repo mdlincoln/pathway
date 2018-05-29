@@ -4,7 +4,7 @@
 #' fulfill a given function based on the previously-selected points.
 #'
 #' The supplied functions [navigate_ordered], [navigate_unique], and
-#' [navigate_any] can be supplied directly to [pathway.]
+#' [navigate_any] can be supplied directly to [pathway].
 #'
 #' [navigate] is a generator that takes an arbitrary user-supplied predicate
 #' function that will generate a vector of search indices when given `x`, `pi`,

@@ -38,7 +38,7 @@ fulfill a given function based on the previously-selected points.
 }
 \details{
 The supplied functions \link{navigate_ordered}, \link{navigate_unique}, and
-\link{navigate_any} can be supplied directly to \link{pathway.}
+\link{navigate_any} can be supplied directly to \link{pathway}.
 
 \link{navigate} is a generator that takes an arbitrary user-supplied predicate
 function that will generate a vector of search indices when given \code{x}, \code{pi},
