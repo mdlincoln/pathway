@@ -88,5 +88,5 @@ accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, nav
 # Helper function to find points along a line between two points
 ideal_points <- function(a, b, n) {
   stopifnot(length(a) == length(b))
-  mapply(seq, a, b, MoreArgs = list(length.out = n + 2))[2:(n + 1),]
+  as.matrix(mapply(seq, a, b, MoreArgs = list(length.out = n + 2))[2:(n + 1),])
 }
