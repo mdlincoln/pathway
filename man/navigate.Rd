@@ -16,7 +16,7 @@ navigate_unique(x, pi, p1, p2)
 navigate_any(x, pi, p1, p2)
 }
 \arguments{
-\item{.p}{A function taking the following arguments}
+\item{.p}{A function that returns a vector of indices}
 
 \item{...}{}
 
@@ -31,7 +31,7 @@ navigate_any(x, pi, p1, p2)
 \item{...}{Additional arguments passed on to \code{.p}}
 }
 \value{
-Integer. An integer list of indices within \code{m} forming the search
+Integer. An integer vector of indices within \code{x} forming the search
 space for the next step of the nearest neighbor search.
 }
 \description{
@@ -39,9 +39,14 @@ When seeking the next point in a space, search only among those points that
 fulfill a given function based on the previously-selected points.
 }
 \details{
-This can be useful for drawing a path that, for example, only moves forward
-in time, or which introduces a selection probability based on attributes of
-the point supplied in another table.
+The supplied functions \link{navigate_ordered}, \link{navigate_unique}, and
+\link{navigate_any} can be supplied directly to \link{pathway.}
+
+\link{navigate} is a generator that takes an arbitrary user-supplied predicate
+function that will generate a vector of search indices when given \code{x}, \code{pi},
+\code{p1}, and \code{p2}. This can be useful for drawing a path that, for example, only
+moves forward in time, or which introduces a selection probability based on
+attributes of the point supplied in another table.
 }
 \section{Functions}{
 \itemize{

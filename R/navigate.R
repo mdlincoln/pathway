@@ -3,18 +3,23 @@
 #' When seeking the next point in a space, search only among those points that
 #' fulfill a given function based on the previously-selected points.
 #'
-#' This can be useful for drawing a path that, for example, only moves forward
-#' in time, or which introduces a selection probability based on attributes of
-#' the point supplied in another table.
+#' The supplied functions [navigate_ordered], [navigate_unique], and
+#' [navigate_any] can be supplied directly to [pathway.]
+#'
+#' [navigate] is a generator that takes an arbitrary user-supplied predicate
+#' function that will generate a vector of search indices when given `x`, `pi`,
+#' `p1`, and `p2`. This can be useful for drawing a path that, for example, only
+#' moves forward in time, or which introduces a selection probability based on
+#' attributes of the point supplied in another table.
 #'
 #' @param x The original matrix
 #' @param pi Indices of already-selected-nodes
 #' @param p1 Start and end points used in [pathway]
 #' @param p2 Start and end points used in [pathway]
-#' @param .p A function taking the following arguments
+#' @param .p A function that returns a vector of indices
 #' @param ...
 #'
-#' @return Integer. An integer list of indices within `m` forming the search
+#' @return Integer. An integer vector of indices within `x` forming the search
 #'   space for the next step of the nearest neighbor search.
 #'
 #' @param ... Additional arguments passed on to `.p`
