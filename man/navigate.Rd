@@ -16,17 +16,23 @@ navigate_unique(x, pi, p1, p2)
 navigate_any(x, pi, p1, p2)
 }
 \arguments{
-\item{.p}{A function taking the following arguments
-\itemize{
-\item \code{x} The original matrix
-\item \code{pi} Indices of already-selected-nodes
-\item \code{p1}, \code{p2} Start and end points used in \link{pathway}.
-}
+\item{.p}{A function taking the following arguments}
 
-Must return an integer list of indices within \code{m} forming the search space
-for the next step of the nearest neighbor search.}
+\item{...}{}
+
+\item{x}{The original matrix}
+
+\item{pi}{Indices of already-selected-nodes}
+
+\item{p1}{Start and end points used in \link{pathway}}
+
+\item{p2}{Start and end points used in \link{pathway}}
 
 \item{...}{Additional arguments passed on to \code{.p}}
+}
+\value{
+Integer. An integer list of indices within \code{m} forming the search
+space for the next step of the nearest neighbor search.
 }
 \description{
 When seeking the next point in a space, search only among those points that

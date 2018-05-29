@@ -115,6 +115,11 @@ describe("navigate_any", {
     expect_false(any(pi2 %in% navigate_ordered_res2))
   })
 
+  it("Returned indices are all higher than the higest in pi", {
+    expect_gt(min(navigate_ordered_res), max(pi))
+    expect_gt(min(navigate_ordered_res2), max(pi2))
+  })
+
   it("Errors with invalid inputs", {
     expect_error(navigate_ordered(x, pi, 10, 5), "p2 < p1")
     expect_warning(res_w <- navigate_ordered(x, pi = c(6, 8, 12), p1, p2), "no remaining candidate points")

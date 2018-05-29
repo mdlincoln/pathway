@@ -7,13 +7,16 @@
 #' in time, or which introduces a selection probability based on attributes of
 #' the point supplied in another table.
 #'
+#' @param x The original matrix
+#' @param pi Indices of already-selected-nodes
+#' @param p1 Start and end points used in [pathway]
+#' @param p2 Start and end points used in [pathway]
 #' @param .p A function taking the following arguments
-#'   * `x` The original matrix
-#'   * `pi` Indices of already-selected-nodes
-#'   * `p1`, `p2` Start and end points used in [pathway].
+#' @param ...
 #'
-#'   Must return an integer list of indices within `m` forming the search space
-#'   for the next step of the nearest neighbor search.
+#' @return Integer. An integer list of indices within `m` forming the search
+#'   space for the next step of the nearest neighbor search.
+#'
 #' @param ... Additional arguments passed on to `.p`
 #'
 #' @export
