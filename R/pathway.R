@@ -73,14 +73,17 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
 accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
   n <- length(artificial_indices)
   # Construct an empty container to hold results
-  container <- numeric(n)
+  container <- NULL
   for (i in seq_len(n)) {
+    search_space <- navigator(x, pi = container, p1, p2)
+    if (!length(search_space) > 0)
+      stop("Search space must have at least one possible number in it.")
     candidate <- distances::nearest_neighbor_search(
       x_distances, k = 1L,
       query_indices = artificial_indices[i],
-      search_indices = navigator(x, pi = container, p1, p2))
+      search_indices = search_space)
     if (verbose) message(candidate)
-    container[i] <- candidate[1,1]
+    container <- c(container, candidate[1,1])
   }
   container
 }

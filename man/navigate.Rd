@@ -22,7 +22,8 @@ navigate_any(x, pi, p1, p2)
 
 \item{x}{The original matrix}
 
-\item{pi}{Indices of already-selected-nodes}
+\item{pi}{Indices of already-selected-nodes. During the first step of a
+pathway, \code{pi} will be \code{NULL}}
 
 \item{p1}{Start and end points used in \link{pathway}}
 

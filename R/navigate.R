@@ -13,7 +13,8 @@
 #' attributes of the point supplied in another table.
 #'
 #' @param x The original matrix
-#' @param pi Indices of already-selected-nodes
+#' @param pi Indices of already-selected-nodes. During the first step of a
+#'   pathway, `pi` will be `NULL`
 #' @param p1 Start and end points used in [pathway]
 #' @param p2 Start and end points used in [pathway]
 #' @param .p A function that returns a vector of indices
