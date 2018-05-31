@@ -17,6 +17,7 @@
 #'   pathway, `pi` will be `NULL`
 #' @param p1 Start and end points used in [pathway]
 #' @param p2 Start and end points used in [pathway]
+#' @param n Number of indices to be found
 #' @param .p A function that returns a vector of indices
 #' @param ... Additional arguments passed on to `.p`
 #'
@@ -25,7 +26,7 @@
 #'
 #' @export
 navigate <- function(.p, ...) {
-  function(x, pi, p1, p2) {
+  function(x, pi, p1, p2, n) {
     .p(x, pi, p1, p2, ...)
   }
 }
@@ -33,10 +34,10 @@ navigate <- function(.p, ...) {
 #' @describeIn navigate Select only points with indices following the ones
 #'   already selected.
 #' @export
-navigate_ordered <- function(x, pi, p1, p2) {
+navigate_ordered <- function(x, pi, p1, p2, n) {
   if (p2 < p1) stop("Cannot use navigate_ordered when p2 < p1")
   start <- max(max(pi, -Inf) + 1, p1 + 1)
-  end <- p2 - 1
+  end <- p2 - 1 - (n - length(pi))
   if (start < end) {
     following_points <- seq(from = start, to = end, by = 1)
     res <- as.integer(setdiff(following_points, c(p1, p2)))
@@ -51,10 +52,10 @@ navigate_ordered <- function(x, pi, p1, p2) {
 #' @describeIn navigate Select only points with indices preceding the ones
 #'   already selected.
 #' @export
-navigate_ordered_desc <- function(x, pi, p1, p2) {
+navigate_ordered_desc <- function(x, pi, p1, p2, n) {
   if (p2 > p1) stop("Cannot use navigate_ordered when p2 > p1")
   start <- min(min(pi, Inf) - 1, p1 - 1)
-  end <- p2 + 1
+  end <- p2 + 1 + (n - length(pi))
   if (start > end) {
     following_points <- seq(from = start, to = end, by = -1)
     res <- as.integer(setdiff(following_points, c(p1, p2)))
@@ -68,13 +69,13 @@ navigate_ordered_desc <- function(x, pi, p1, p2) {
 
 #' @describeIn navigate Select only points that have not yet been visited.
 #' @export
-navigate_unique <- function(x, pi, p1, p2) {
+navigate_unique <- function(x, pi, p1, p2, n) {
   seq_len(nrow(x))[-c(pi, p1, p2)]
 }
 
 #' @describeIn navigate Select any point, even ones that have already been
 #'   visited.
 #' @export
-navigate_any <- function(x, pi, p1, p2) {
+navigate_any <- function(x, pi, p1, p2, n) {
   seq_len(nrow(x))[-c(p1, p2)]
 }

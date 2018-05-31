@@ -10,13 +10,13 @@
 \usage{
 navigate(.p, ...)
 
-navigate_ordered(x, pi, p1, p2)
+navigate_ordered(x, pi, p1, p2, n)
 
-navigate_ordered_desc(x, pi, p1, p2)
+navigate_ordered_desc(x, pi, p1, p2, n)
 
-navigate_unique(x, pi, p1, p2)
+navigate_unique(x, pi, p1, p2, n)
 
-navigate_any(x, pi, p1, p2)
+navigate_any(x, pi, p1, p2, n)
 }
 \arguments{
 \item{.p}{A function that returns a vector of indices}
@@ -31,6 +31,8 @@ pathway, \code{pi} will be \code{NULL}}
 \item{p1}{Start and end points used in \link{pathway}}
 
 \item{p2}{Start and end points used in \link{pathway}}
+
+\item{n}{Number of indices to be found}
 }
 \value{
 Integer. An integer vector of indices within \code{x} forming the search

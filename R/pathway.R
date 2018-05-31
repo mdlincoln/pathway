@@ -75,7 +75,7 @@ accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, nav
   # Construct an empty container to hold results
   container <- NULL
   for (i in seq_len(n)) {
-    search_space <- navigator(x, pi = container, p1, p2)
+    search_space <- navigator(x, pi = container, p1, p2, n)
     if (!length(search_space) > 0)
       stop("Search space must have at least one possible number in it.")
     candidate <- distances::nearest_neighbor_search(
