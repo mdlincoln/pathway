@@ -35,7 +35,7 @@ navigate <- function(.p, ...) {
 #' @export
 navigate_ordered <- function(x, pi, p1, p2) {
   if (p2 < p1) stop("Cannot use navigate_ordered when p2 < p1")
-  start <- max(max(pi) + 1, p1 + 1)
+  start <- max(max(pi, -Inf) + 1, p1 + 1)
   end <- min(p2, nrow(x))
   if (start < end) {
     following_points <- seq(from = start, to = end, by = 1)

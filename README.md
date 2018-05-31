@@ -29,23 +29,17 @@ m <- matrix(rnorm(1000), nrow = 500, ncol = 2)
 p1 <- 2L
 p2 <- 11L
 p <- pathway(m, p1, p2, n = 5)
-p
-#> $line
+# Returns both the ideal points between p1 and p2
+p$line
 #>            [,1]       [,2]
 #> [1,]  0.9326974 -0.5290643
 #> [2,]  0.6655819 -0.3696614
 #> [3,]  0.3984664 -0.2102584
 #> [4,]  0.1313509 -0.0508555
 #> [5,] -0.1357646  0.1085474
-#> 
-#> $i
+# as well as the indices of the nearest neighbors
+p$i
 #> [1] 227 495 419 479 451
-#> 
-#> $p1
-#> [1] 2
-#> 
-#> $p2
-#> [1] 11
 
 plot_pathway(m, p)
 ```
@@ -60,7 +54,8 @@ the matrix.
 
 ``` r
 p_ordered <- pathway(m, 5, 380, n = 5, navigator = navigate_ordered)
-#> Warning in max(pi): no non-missing arguments to max; returning -Inf
+p_ordered$i
+#> [1]  75 279 362 367 370
 plot_pathway(m, p_ordered)
 ```
 

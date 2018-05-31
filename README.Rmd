@@ -41,7 +41,10 @@ m <- matrix(rnorm(1000), nrow = 500, ncol = 2)
 p1 <- 2L
 p2 <- 11L
 p <- pathway(m, p1, p2, n = 5)
-p
+# Returns both the ideal points between p1 and p2
+p$line
+# as well as the indices of the nearest neighbors
+p$i
 
 plot_pathway(m, p)
 ```
@@ -51,6 +54,7 @@ For example, `navigate_unique` will not revisit the same point along a path, and
 
 ```{r naviagte}
 p_ordered <- pathway(m, 5, 380, n = 5, navigator = navigate_ordered)
+p_ordered$i
 plot_pathway(m, p_ordered)
 ```
 
