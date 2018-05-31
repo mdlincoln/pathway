@@ -42,6 +42,6 @@ plot_pathway <- function(m, p, pca = FALSE, name_all_points = FALSE, name_end_po
   if (name_all_points)
     graphics::text(plot_m[plot_i,], labels = plot_labels, pos = 3)
   if (name_end_points)
-    graphics::text(plot_m[c(p1, p2)], labels = endpoint_labels, pos = 3)
+    graphics::text(plot_m[c(p1, p2),], labels = endpoint_labels, pos = 3)
   graphics::lines(plot_m[c(p1, plot_i, p2),])
 }
