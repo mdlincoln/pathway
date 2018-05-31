@@ -48,6 +48,24 @@ navigate_ordered <- function(x, pi, p1, p2) {
   p2
 }
 
+#' @describeIn navigate Select only points with indices preceding the ones
+#'   already selected.
+#' @export
+navigate_ordered_desc <- function(x, pi, p1, p2) {
+  if (p2 > p1) stop("Cannot use navigate_ordered when p2 > p1")
+  start <- min(min(pi), p1 - 1)
+  end <- p2 + 1
+  if (start > end) {
+    following_points <- seq(from = start, to = end, by = -1)
+    res <- as.integer(setdiff(following_points, c(p1, p2)))
+    if (length(res > 0)) {
+      return(res)
+    }
+  }
+  warning("There are no remaining candidate points in this path. Returning p2")
+  p2
+}
+
 #' @describeIn navigate Select only points that have not yet been visited.
 #' @export
 navigate_unique <- function(x, pi, p1, p2) {

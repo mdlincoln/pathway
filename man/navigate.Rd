@@ -3,6 +3,7 @@
 \name{navigate}
 \alias{navigate}
 \alias{navigate_ordered}
+\alias{navigate_ordered_desc}
 \alias{navigate_unique}
 \alias{navigate_any}
 \title{Limit which points are included in the nearest neighbor search}
@@ -10,6 +11,8 @@
 navigate(.p, ...)
 
 navigate_ordered(x, pi, p1, p2)
+
+navigate_ordered_desc(x, pi, p1, p2)
 
 navigate_unique(x, pi, p1, p2)
 
@@ -50,6 +53,9 @@ attributes of the point supplied in another table.
 \section{Functions}{
 \itemize{
 \item \code{navigate_ordered}: Select only points with indices following the ones
+already selected.
+
+\item \code{navigate_ordered_desc}: Select only points with indices preceding the ones
 already selected.
 
 \item \code{navigate_unique}: Select only points that have not yet been visited.
