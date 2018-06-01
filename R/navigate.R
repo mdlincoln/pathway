@@ -46,7 +46,7 @@ navigate_ordered <- function(x, pi, p1, p2, n) {
     }
   }
   warning("There are no remaining candidate points in this path. Returning p2")
-  p2
+  as.integer(p2)
 }
 
 #' @describeIn navigate Select only points with indices preceding the ones
@@ -64,18 +64,18 @@ navigate_ordered_desc <- function(x, pi, p1, p2, n) {
     }
   }
   warning("There are no remaining candidate points in this path. Returning p2")
-  p2
+  as.integer(p2)
 }
 
 #' @describeIn navigate Select only points that have not yet been visited.
 #' @export
 navigate_unique <- function(x, pi, p1, p2, n) {
-  seq_len(nrow(x))[-c(pi, p1, p2)]
+  as.integer(seq_len(nrow(x))[-c(pi, p1, p2)])
 }
 
 #' @describeIn navigate Select any point, even ones that have already been
 #'   visited.
 #' @export
 navigate_any <- function(x, pi, p1, p2, n) {
-  seq_len(nrow(x))[-c(p1, p2)]
+  as.integer(seq_len(nrow(x))[-c(p1, p2)])
 }

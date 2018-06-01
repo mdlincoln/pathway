@@ -4,13 +4,14 @@ set.seed(10)
 nr <- 20
 nc <- 5
 x <- matrix(rnorm(nr * nc), nrow = nr, ncol = nc)
+n <- 5
 p1 <- 5
 p2 <- 12
 pi <- numeric(4)
 pi2 <- c(5, 10, 0, 0)
 
-navigate_any_res <- navigate_any(x, pi, p1, p2)
-navigate_any_res2 <- navigate_any(x, p2, p1, p2)
+navigate_any_res <- navigate_any(x, pi, p1, p2, n)
+navigate_any_res2 <- navigate_any(x, pi2, p1, p2, n)
 
 describe("navigate_any", {
   it("Returns positive non-zero integer vector", {
@@ -42,8 +43,8 @@ describe("navigate_any", {
 
 context("navigate_unique")
 
-navigate_unique_res <- navigate_unique(x, pi, p1, p2)
-navigate_unique_res2 <- navigate_unique(x, pi2, p1, p2)
+navigate_unique_res <- navigate_unique(x, pi, p1, p2, n)
+navigate_unique_res2 <- navigate_unique(x, pi2, p1, p2, n)
 
 describe("navigate_any", {
   it("Returns positive non-zero integer vector", {
@@ -80,8 +81,8 @@ describe("navigate_any", {
 
 context("navigate_ordered")
 
-navigate_ordered_res <- navigate_ordered(x, pi, p1, p2)
-navigate_ordered_res2 <- navigate_ordered(x, pi2, p1, p2)
+navigate_ordered_res <- navigate_ordered(x, pi, p1, p2, n)
+expect_warning(navigate_ordered_res2 <- navigate_ordered(x, pi2, p1, p2, n))
 
 describe("navigate_any", {
   it("Returns positive non-zero integer vector", {
@@ -121,8 +122,8 @@ describe("navigate_any", {
   })
 
   it("Errors with invalid inputs", {
-    expect_error(navigate_ordered(x, pi, 10, 5), "p2 < p1")
-    expect_warning(res_w <- navigate_ordered(x, pi = c(6, 8, 12), p1, p2), "no remaining candidate points")
+    expect_error(navigate_ordered(x, pi, 10, 5, n), "p2 < p1")
+    expect_warning(res_w <- navigate_ordered(x, pi = c(6, 8, 12), p1, p2, n), "no remaining candidate points")
     expect_equal(res_w, p2, info = "When no remaining candidate points are found, return p2 only.")
   })
 })
