@@ -65,9 +65,8 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
   )
 }
 
-# Loop along ideal points defined in ai and build a set of nearest neighbor
-# search results. The navigator function establishes limits on the search
-# indices passed to [distances::nearest_neighbor_search]
+# This wrapper checks for special cases of naviagator functions and dispatches
+# the proper handlers
 accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
   if (attr(navigator, "nav_class", exact = TRUE) == "navigate_any") {
     accumulate_neighbors_any(x, x_distances, p1, p2, artificial_indices, verbose)
@@ -78,6 +77,9 @@ accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, nav
   }
 }
 
+# Loop along ideal points defined in artificial_indices and build a set of
+# nearest neighbor search results. The navigator function establishes limits on
+# the search indices passed to [distances::nearest_neighbor_search]
 accumulate_neighbors_custom <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
   n <- length(artificial_indices)
   # Construct an empty container to hold results
@@ -107,6 +109,7 @@ accumulate_neighbors_any <- function(x, x_distances, p1, p2, artificial_indices,
   unname(candidates[1,])
 }
 
+# Special case of accumulating only unique neighbors
 accumulate_neighbors_unique <- function(x, x_distances, p1, p2, artificial_indices, ...) {
   # For each ideal point, find as many nearest neighbors as total requested
   # points
