@@ -121,7 +121,7 @@ accumulate_neighbors_unique <- function(x, x_distances, p1, p2, artificial_indic
   # Keep the closes results for each point that is not yet used in the results
   results <- integer(length(artificial_indices))
   for (i in seq_along(results)) {
-    results[i] <- setdiff(candidates[,i], results[i - 1])[1]
+    results[i] <- setdiff(candidates[,i], results)[1]
   }
   results
 }
