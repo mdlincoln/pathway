@@ -2,11 +2,13 @@
 #' matrix
 #'
 #' Given two points in a matrix `p1` and `p2`, find the points nearest to an
-#' ideal path between them.
+#' ideal path of `n` points between them.
 #'
-#' By default `k` is 1, and will return the closest possible points to the ideal
-#' line between `p1` and `p2`. Setting k to a higher number will mean points are
-#' sampled from a larger range.
+#' To put restrictuions on the search made, specify a `navigator` function.
+#' Several are supplied in this package, such as [navigate_unique], which will
+#' produce a path that does not revisit any points, or [navigate_ordered], that
+#' will on return points from progressively later posiiton int he matrix. It is
+#' also possible to specify a custom function using [navigate].
 #'
 #' @param x A two-dimensional numeric matrix.
 #' @param p1 Integer. Row index of point at the start of the path.
@@ -18,7 +20,7 @@
 #' @param verbose Display progress messages.
 #'
 #' @return A list with the following values
-#' * `line` `n` points along a line between `p1` and `p2`.
+#' * `line` A matrix of `n` ideal points along a line between `p1` and `p2`.
 #' * `i` Row indices of `x` indicating matched points.
 #' * `p1`, `p2` Inidices of points origially passed in.
 #'
@@ -31,6 +33,8 @@
 #' m[2,]
 #' m[5,]
 #' pathway(m, 2, 11)
+#'
+#' pathway(m, 2, 400, navigate = navigate_ordered)
 pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose = FALSE) {
   assert_that(is.matrix(x))
   assert_that(is.numeric(x))
@@ -68,12 +72,14 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
 # This wrapper checks for special cases of naviagator functions and dispatches
 # the proper handlers
 accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
-  if (attr(navigator, "nav_class", exact = TRUE) == "navigate_any") {
+  if (is.null(attr(navigator, "nav_class", exact = TRUE))) {
+    accumulate_neighbors_custom(x, x_distances, p1, p2, artificial_indices, navigator, verbose)
+  } else if (attr(navigator, "nav_class", exact = TRUE) == "navigate_any") {
     accumulate_neighbors_any(x, x_distances, p1, p2, artificial_indices, verbose)
   } else if (attr(navigator, "nav_class", exact = TRUE) == "navigate_unique") {
     accumulate_neighbors_unique(x, x_distances, p1, p2, artificial_indices, verbose)
   } else {
-    accumulate_neighbors_custom(x, x_distances, p1, p2, artificial_indices, navigator, verbose)
+    stop("Navigator function is not recognized.")
   }
 }
 

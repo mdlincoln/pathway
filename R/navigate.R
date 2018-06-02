@@ -25,6 +25,28 @@
 #'   space for the next step of the nearest neighbor search.
 #'
 #' @export
+#'
+#' @examples
+#'
+#' m <- matrix(runif(1000), nrow = 500, ncol = 2)
+#' obs_types <- sample(c("setosa", "versicolor", "virginica"), 500, replace = TRUE)
+#'
+#' # A custom predicate function must take the original matrix, the list of
+#' # previously-selected pathway points, along with p1 and p2.
+#' different_species <- function(x, pi, p1, p2, obs_types) {
+#'   if (is.null(pi)) {
+#'     search_space <- 1:nrow(x)
+#'   } else {
+#'     # Only search observations that do not have the same species as the immediately previous one.
+#'     prev_type <- obs_types[tail(pi, 1)]
+#'     search_space <- which(obs_types != prev_type)
+#'   }
+#'
+#'   # Don't forget to exclude p1 and p2
+#'   setdiff(search_space, c(p1, p2))
+#' }
+#'
+#' p_species <- pathway(m, 2, 11, n = 8, navigator = navigate(different_species, obs_types))
 navigate <- function(.p, ...) {
   function(x, pi, p1, p2, n) {
     .p(x, pi, p1, p2, ...)
@@ -82,5 +104,5 @@ navigate_any <- structure(function(x, pi, p1, p2, n) {
   dummy_msg()
 }, nav_class = "navigate_any")
 
-dummy_msg <- function() stop("This is a dummy function that shouldn't actually be called. If you are seeing this, make sure you call it without ().")
+dummy_msg <- function() stop("This is a dummy function that shouldn't actually be evaluated. If you are seeing this, make sure you specify it in pathway() by name only, without using parentheses.")
 

@@ -34,7 +34,7 @@ plot_pathway <- function(m, p, pca = FALSE, name_all_points = FALSE, name_end_po
     endpoint_labels <- rownames(plot_m)[c(p1, p2)]
   }
 
-  graphics::plot(plot_m, col = rgb(red = 0.75, green = 0.75, blue = 0.75, alpha = 0.2), pch = 20)
+  graphics::plot(plot_m, col = grDevices::rgb(red = 0.75, green = 0.75, blue = 0.75, alpha = 0.2), pch = 20)
   if (nrow(plot_line) > 1)
     graphics::points(plot_line, pch = 4)
   graphics::points(plot_m[c(p1, p2),], col = "blue", pch = 15)

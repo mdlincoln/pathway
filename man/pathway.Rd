@@ -27,19 +27,21 @@ previously-selected steps.. See \link{navigate} for more details.}
 \value{
 A list with the following values
 \itemize{
-\item \code{line} \code{n} points along a line between \code{p1} and \code{p2}.
+\item \code{line} A matrix of \code{n} ideal points along a line between \code{p1} and \code{p2}.
 \item \code{i} Row indices of \code{x} indicating matched points.
 \item \code{p1}, \code{p2} Inidices of points origially passed in.
 }
 }
 \description{
 Given two points in a matrix \code{p1} and \code{p2}, find the points nearest to an
-ideal path between them.
+ideal path of \code{n} points between them.
 }
 \details{
-By default \code{k} is 1, and will return the closest possible points to the ideal
-line between \code{p1} and \code{p2}. Setting k to a higher number will mean points are
-sampled from a larger range.
+To put restrictuions on the search made, specify a \code{navigator} function.
+Several are supplied in this package, such as \link{navigate_unique}, which will
+produce a path that does not revisit any points, or \link{navigate_ordered}, that
+will on return points from progressively later posiiton int he matrix. It is
+also possible to specify a custom function using \link{navigate}.
 }
 \examples{
 set.seed(10)
@@ -47,4 +49,6 @@ m <- matrix(runif(1000), nrow = 500, ncol = 2)
 m[2,]
 m[5,]
 pathway(m, 2, 11)
+
+pathway(m, 2, 400, navigate = navigate_ordered)
 }
