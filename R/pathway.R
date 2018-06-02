@@ -48,11 +48,9 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
   if (verbose) message("- Adding ideal points into original matrix")
   artificial_vector <- ideal_points(a = x[p1,], b = x[p2,], n = n)
   artificial_indices <- seq(nrow(x) + 1, nrow(x) + n)
-  unsearchable_indices <- c(p1, p2, artificial_indices)
 
   # Add this ideal vector into the original matrix
   merged_x <- rbind(x, artificial_vector)
-  searchable_indices <- seq_len(nrow(merged_x))[-unsearchable_indices]
 
   # Locate k nearest neighbors to the points in the ideal vector
   if (verbose) message("- Nearest neighbor search")
