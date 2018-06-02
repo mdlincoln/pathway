@@ -71,6 +71,16 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
 # search results. The navigator function establishes limits on the search
 # indices passed to [distances::nearest_neighbor_search]
 accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
+  if (attr(navigator, "nav_class", exact = TRUE) == "navigate_any") {
+    accumulate_neighbors_any(x, x_distances, p1, p2, artificial_indices, verbose)
+  } else if (attr(navigator, "nav_class", exact = TRUE) == "navigate_unique") {
+    accumulate_neighbors_unique(x, x_distances, p1, p2, artificial_indices, verbose)
+  } else {
+    accumulate_neighbors_custom(x, x_distances, p1, p2, artificial_indices, navigator, verbose)
+  }
+}
+
+accumulate_neighbors_custom <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
   n <- length(artificial_indices)
   # Construct an empty container to hold results
   container <- NULL
@@ -86,6 +96,33 @@ accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, nav
     container <- c(container, candidate[1,1])
   }
   container
+}
+
+# Directly calls distances::nearest_neighbor_search, excluding p1 and p2 from
+# the search indices
+accumulate_neighbors_any <- function(x, x_distances, p1, p2, artificial_indices, ...) {
+  candidates <- distances::nearest_neighbor_search(
+    x_distances, k = 1L,
+    query_indices = artificial_indices,
+    search_indices = seq_len(nrow(x))[-c(p1, p2)])
+
+  unname(candidates[1,])
+}
+
+accumulate_neighbors_unique <- function(x, x_distances, p1, p2, artificial_indices, ...) {
+  # For each ideal point, find as many nearest neighbors as total requested
+  # points
+  candidates <- distances::nearest_neighbor_search(
+    x_distances, k = length(artificial_indices),
+    query_indices = artificial_indices,
+    search_indices = seq_len(nrow(x))[-c(p1, p2)])
+
+  # Keep the closes results for each point that is not yet used in the results
+  results <- integer(length(artificial_indices))
+  for (i in seq_along(results)) {
+    results[i] <- setdiff(candidates[,i], results[i - 1])[1]
+  }
+  results
 }
 
 # Helper function to find points along a line between two points

@@ -69,13 +69,18 @@ navigate_ordered_desc <- function(x, pi, p1, p2, n) {
 
 #' @describeIn navigate Select only points that have not yet been visited.
 #' @export
-navigate_unique <- function(x, pi, p1, p2, n) {
-  as.integer(seq_len(nrow(x))[-c(pi, p1, p2)])
-}
+navigate_unique <- structure(function(x, pi, p1, p2, n) {
+  # This is a dummy function that isn't actually run by pathway()
+  dummy_msg()
+}, nav_class = "navigate_unique")
 
 #' @describeIn navigate Select any point, even ones that have already been
 #'   visited.
 #' @export
-navigate_any <- function(x, pi, p1, p2, n) {
-  as.integer(seq_len(nrow(x))[-c(p1, p2)])
-}
+navigate_any <- structure(function(x, pi, p1, p2, n) {
+  # This is a dummy function that isn't actually run by pathway()
+  dummy_msg()
+}, nav_class = "navigate_any")
+
+dummy_msg <- function() stop("This is a dummy function that shouldn't actually be called. If you are seeing this, make sure you call it without ().")
+
