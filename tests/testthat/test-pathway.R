@@ -1,10 +1,9 @@
-context("pathway")
-
 set.seed(105)
 rmat <- matrix(rnorm(100), 50, 2)
 na_rmat <- rmat
 na_rmat[c(1, 5, 7)] <- NA
 
+context("pathway")
 describe("pathway", {
   it("rejects mismatched_inputs", {
     expect_error(pathway(1:10, 1, 2))
