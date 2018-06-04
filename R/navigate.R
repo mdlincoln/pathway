@@ -60,7 +60,7 @@ navigate_ordered <- function(x, pi, p1, p2, n) {
   if (p2 < p1) stop("Cannot use navigate_ordered when p2 < p1")
   start <- max(max(pi, -Inf) + 1, p1 + 1)
   end <- p2 - 1 - (n - length(pi))
-  if (start < end) {
+  if (start <= end) {
     following_points <- seq(from = start, to = end, by = 1)
     res <- as.integer(setdiff(following_points, c(p1, p2)))
     if (length(res > 0)) {
@@ -78,7 +78,7 @@ navigate_ordered_desc <- function(x, pi, p1, p2, n) {
   if (p2 > p1) stop("Cannot use navigate_ordered when p2 > p1")
   start <- min(min(pi, Inf) - 1, p1 - 1)
   end <- p2 + 1 + (n - length(pi))
-  if (start > end) {
+  if (start >= end) {
     following_points <- seq(from = start, to = end, by = -1)
     res <- as.integer(setdiff(following_points, c(p1, p2)))
     if (length(res > 0)) {
