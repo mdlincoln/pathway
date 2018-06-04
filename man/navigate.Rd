@@ -10,13 +10,13 @@
 \usage{
 navigate(.p, ...)
 
-navigate_ordered(x, pi, p1, p2)
+navigate_ordered(x, pi, p1, p2, n)
 
-navigate_ordered_desc(x, pi, p1, p2)
+navigate_ordered_desc(x, pi, p1, p2, n)
 
-navigate_unique(x, pi, p1, p2)
+navigate_unique(x, pi, p1, p2, n)
 
-navigate_any(x, pi, p1, p2)
+navigate_any(x, pi, p1, p2, n)
 }
 \arguments{
 \item{.p}{A function that returns a vector of indices}
@@ -31,6 +31,8 @@ pathway, \code{pi} will be \code{NULL}}
 \item{p1}{Start and end points used in \link{pathway}}
 
 \item{p2}{Start and end points used in \link{pathway}}
+
+\item{n}{Number of indices to be found}
 }
 \value{
 Integer. An integer vector of indices within \code{x} forming the search
@@ -64,3 +66,25 @@ already selected.
 visited.
 }}
 
+\examples{
+
+m <- matrix(runif(1000), nrow = 500, ncol = 2)
+obs_types <- sample(c("setosa", "versicolor", "virginica"), 500, replace = TRUE)
+
+# A custom predicate function must take the original matrix, the list of
+# previously-selected pathway points, along with p1 and p2.
+different_species <- function(x, pi, p1, p2, obs_types) {
+  if (is.null(pi)) {
+    search_space <- 1:nrow(x)
+  } else {
+    # Only search observations that do not have the same species as the immediately previous one.
+    prev_type <- obs_types[tail(pi, 1)]
+    search_space <- which(obs_types != prev_type)
+  }
+
+  # Don't forget to exclude p1 and p2
+  setdiff(search_space, c(p1, p2))
+}
+
+p_species <- pathway(m, 2, 11, n = 8, navigator = navigate(different_species, obs_types))
+}

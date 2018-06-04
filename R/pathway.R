@@ -2,11 +2,13 @@
 #' matrix
 #'
 #' Given two points in a matrix `p1` and `p2`, find the points nearest to an
-#' ideal path between them.
+#' ideal path of `n` points between them.
 #'
-#' By default `k` is 1, and will return the closest possible points to the ideal
-#' line between `p1` and `p2`. Setting k to a higher number will mean points are
-#' sampled from a larger range.
+#' To put restrictuions on the search made, specify a `navigator` function.
+#' Several are supplied in this package, such as [navigate_unique], which will
+#' produce a path that does not revisit any points, or [navigate_ordered], that
+#' will on return points from progressively later posiiton int he matrix. It is
+#' also possible to specify a custom function using [navigate].
 #'
 #' @param x A two-dimensional numeric matrix.
 #' @param p1 Integer. Row index of point at the start of the path.
@@ -18,7 +20,7 @@
 #' @param verbose Display progress messages.
 #'
 #' @return A list with the following values
-#' * `line` `n` points along a line between `p1` and `p2`.
+#' * `line` A matrix of `n` ideal points along a line between `p1` and `p2`.
 #' * `i` Row indices of `x` indicating matched points.
 #' * `p1`, `p2` Inidices of points origially passed in.
 #'
@@ -31,6 +33,8 @@
 #' m[2,]
 #' m[5,]
 #' pathway(m, 2, 11)
+#'
+#' pathway(m, 2, 400, navigate = navigate_ordered)
 pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose = FALSE) {
   assert_that(is.matrix(x))
   assert_that(is.numeric(x))
@@ -48,11 +52,9 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
   if (verbose) message("- Adding ideal points into original matrix")
   artificial_vector <- ideal_points(a = x[p1,], b = x[p2,], n = n)
   artificial_indices <- seq(nrow(x) + 1, nrow(x) + n)
-  unsearchable_indices <- c(p1, p2, artificial_indices)
 
   # Add this ideal vector into the original matrix
   merged_x <- rbind(x, artificial_vector)
-  searchable_indices <- seq_len(nrow(merged_x))[-unsearchable_indices]
 
   # Locate k nearest neighbors to the points in the ideal vector
   if (verbose) message("- Nearest neighbor search")
@@ -67,15 +69,29 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
   )
 }
 
-# Loop along ideal points defined in ai and build a set of nearest neighbor
-# search results. The navigator function establishes limits on the search
-# indices passed to [distances::nearest_neighbor_search]
+# This wrapper checks for special cases of naviagator functions and dispatches
+# the proper handlers
 accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
+  if (is.null(attr(navigator, "nav_class", exact = TRUE))) {
+    accumulate_neighbors_custom(x, x_distances, p1, p2, artificial_indices, navigator, verbose)
+  } else if (attr(navigator, "nav_class", exact = TRUE) == "navigate_any") {
+    accumulate_neighbors_any(x, x_distances, p1, p2, artificial_indices, verbose)
+  } else if (attr(navigator, "nav_class", exact = TRUE) == "navigate_unique") {
+    accumulate_neighbors_unique(x, x_distances, p1, p2, artificial_indices, verbose)
+  } else {
+    stop("Navigator function is not recognized.")
+  }
+}
+
+# Loop along ideal points defined in artificial_indices and build a set of
+# nearest neighbor search results. The navigator function establishes limits on
+# the search indices passed to [distances::nearest_neighbor_search]
+accumulate_neighbors_custom <- function(x, x_distances, p1, p2, artificial_indices, navigator, verbose) {
   n <- length(artificial_indices)
   # Construct an empty container to hold results
   container <- NULL
   for (i in seq_len(n)) {
-    search_space <- navigator(x, pi = container, p1, p2)
+    search_space <- navigator(x, pi = container, p1, p2, n)
     if (!length(search_space) > 0)
       stop("Search space must have at least one possible number in it.")
     candidate <- distances::nearest_neighbor_search(
@@ -86,6 +102,34 @@ accumulate_neighbors <- function(x, x_distances, p1, p2, artificial_indices, nav
     container <- c(container, candidate[1,1])
   }
   container
+}
+
+# Directly calls distances::nearest_neighbor_search, excluding p1 and p2 from
+# the search indices
+accumulate_neighbors_any <- function(x, x_distances, p1, p2, artificial_indices, ...) {
+  candidates <- distances::nearest_neighbor_search(
+    x_distances, k = 1L,
+    query_indices = artificial_indices,
+    search_indices = seq_len(nrow(x))[-c(p1, p2)])
+
+  unname(candidates[1,])
+}
+
+# Special case of accumulating only unique neighbors
+accumulate_neighbors_unique <- function(x, x_distances, p1, p2, artificial_indices, ...) {
+  # For each ideal point, find as many nearest neighbors as total requested
+  # points
+  candidates <- distances::nearest_neighbor_search(
+    x_distances, k = length(artificial_indices),
+    query_indices = artificial_indices,
+    search_indices = seq_len(nrow(x))[-c(p1, p2)])
+
+  # Keep the closes results for each point that is not yet used in the results
+  results <- integer(length(artificial_indices))
+  for (i in seq_along(results)) {
+    results[i] <- setdiff(candidates[,i], results)[1]
+  }
+  results
 }
 
 # Helper function to find points along a line between two points
