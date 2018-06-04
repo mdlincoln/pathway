@@ -7,6 +7,8 @@
 Status](https://travis-ci.org/mdlincoln/pathway.svg?branch=master)](https://travis-ci.org/mdlincoln/pathway)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/mdlincoln/pathway?branch=master&svg=true)](https://ci.appveyor.com/project/mdlincoln/pathway)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/mdlincoln/pathway/master.svg)](https://codecov.io/github/mdlincoln/pathway?branch=master)
 
 pathway finds a pathway of observations between two points in a matrix.
 
