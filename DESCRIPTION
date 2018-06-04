@@ -1,17 +1,23 @@
 Package: pathway
-Version: 0.0.0.9000
 Title: Find Point Pathways Through a Matrix
+Version: 0.0.0.9000
+Authors@R: person('Matthew Lincoln', email = 'matthew.d.lincoln@gmail.com', 
+    role = c('aut', 'cre'))
 Description: Given two points in a numeric matrix, find the shortest pathway of 
-  evenly spaced points between them.
-Authors@R: person('Matthew Lincoln', email = 'matthew.d.lincoln@gmail.com', role = c('aut', 'cre'))
+    evenly spaced points between them. Includes methods for constraining the 
+    nearest neighbor search to move in a specific direction, and an interface 
+    for implementing other arbitrary conditional constraints on the search 
+    space.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-ByteCompile: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
-Imports: distances,
-    assertthat
 URL: https://github.com/mdlincoln/pathway
 BugReports: https://github.com/mdlincoln/pathway/issues
-Suggests: testthat
+Imports: 
+    assertthat,
+    distances
+Suggests: 
+    testthat
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
