@@ -1,6 +1,6 @@
 Package: pathway
 Version: 0.0.0.9000
-Title: Find Point Pathways Through A Matrix
+Title: Find Point Pathways Through a Matrix
 Description: Given two points in a numeric matrix, find the shortest pathway of 
   evenly spaced points between them.
 Authors@R: person('Matthew Lincoln', email = 'matthew.d.lincoln@gmail.com', role = c('aut', 'cre'))
