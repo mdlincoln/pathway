@@ -23,6 +23,7 @@
 #' * `line` A matrix of `n` ideal points along a line between `p1` and `p2`.
 #' * `i` Row indices of `x` indicating matched points.
 #' * `p1`, `p2` Inidices of points origially passed in.
+#' * `nrmsd` The normalized root-mean-square deviation of the generated pathway points from the ideal
 #'
 #' @import assertthat
 #'
@@ -65,7 +66,8 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
     line = unname(artificial_vector),
     i = unname(nn_results),
     p1 = p1,
-    p2 = p2
+    p2 = p2,
+    nrmsd = nrmsd(artificial_vector, m[i,])
   )
 }
 
@@ -137,3 +139,9 @@ ideal_points <- function(a, b, n) {
   stopifnot(length(a) == length(b))
   as.matrix(mapply(seq, a, b, MoreArgs = list(length.out = n + 2))[2:(n + 1),])
 }
+
+# Normalized root-mean-square deviation
+nrmsd <- function(a, b) {
+  sqrt(mean((a - b)^2)) / mean(a)
+}
+
