@@ -58,7 +58,7 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
 
   # Locate k nearest neighbors to the points in the ideal vector
   if (verbose) message("- Nearest neighbor search")
-  x_distances <- distances::distances(merged_x)
+  x_distances <- distances::distances(merged_x, ...)
   nn_results <- accumulate_neighbors(x, x_distances, p1, p2, artificial_indices, navigator, verbose)
 
   list(
