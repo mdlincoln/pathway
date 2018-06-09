@@ -5,8 +5,8 @@
 \title{Find a pathway of nearest neighbors between two points in a multidimensional
 matrix}
 \usage{
-pathway(x, p1, p2, n = 4L, navigator = navigate_unique, ...,
-  verbose = FALSE)
+pathway(x, p1, p2, n = 4L, navigator = navigate_unique, verbose = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{A two-dimensional numeric matrix.}
@@ -20,9 +20,9 @@ pathway(x, p1, p2, n = 4L, navigator = navigate_unique, ...,
 \item{navigator}{Function for constraining nearest neighbor search based on
 previously-selected steps.. See \link{navigate} for more details.}
 
-\item{...}{Additional arguments passed to \link[distances:distances]{distances::distances}.}
-
 \item{verbose}{Display progress messages.}
+
+\item{...}{Additional arguments passed to \link[distances:distances]{distances::distances}.}
 }
 \value{
 A list with the following values
@@ -50,5 +50,5 @@ m[2,]
 m[5,]
 pathway(m, 2, 11)
 
-pathway(m, 2, 400, navigate = navigate_ordered)
+pathway(m, 2, 400, navigator = navigate_ordered)
 }
