@@ -16,8 +16,8 @@
 #' @param n Integer. Number of intervening points to find.
 #' @param navigator Function for constraining nearest neighbor search based on
 #'   previously-selected steps.. See [navigate] for more details.
-#' @param ... Additional arguments passed to [distances::distances].
 #' @param verbose Display progress messages.
+#' @param ... Additional arguments passed to [distances::distances].
 #'
 #' @return A list with the following values
 #' * `line` A matrix of `n` ideal points along a line between `p1` and `p2`.
@@ -34,8 +34,8 @@
 #' m[5,]
 #' pathway(m, 2, 11)
 #'
-#' pathway(m, 2, 400, navigate = navigate_ordered)
-pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose = FALSE) {
+#' pathway(m, 2, 400, navigator = navigate_ordered)
+pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, verbose = FALSE, ...) {
   assert_that(is.matrix(x))
   assert_that(is.numeric(x))
   assert_that(is.count(p1))
@@ -56,9 +56,10 @@ pathway <- function(x, p1, p2, n = 4L, navigator = navigate_unique, ..., verbose
   # Add this ideal vector into the original matrix
   merged_x <- rbind(x, artificial_vector)
 
+
   # Locate k nearest neighbors to the points in the ideal vector
   if (verbose) message("- Nearest neighbor search")
-  x_distances <- distances::distances(merged_x)
+  x_distances <- distances::distances(merged_x, ...)
   nn_results <- accumulate_neighbors(x, x_distances, p1, p2, artificial_indices, navigator, verbose)
 
   list(
