@@ -12,10 +12,11 @@ Description: Given two points in a numeric matrix, find the shortest pathway of
 License: MIT + file LICENSE
 URL: https://github.com/mdlincoln/pathway
 BugReports: https://github.com/mdlincoln/pathway/issues
-Imports: 
+Imports:
     assertthat,
-    distances
-Suggests: 
+    distances,
+    Rcpp
+Suggests:
     covr,
     testthat
 ByteCompile: true
@@ -23,3 +24,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
+LinkingTo: Rcpp
