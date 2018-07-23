@@ -1,8 +1,9 @@
 Package: pathway
 Title: Find Point Pathways Through a Matrix
 Version: 0.0.0.9000
-Authors@R: person('Matthew Lincoln', email = 'matthew.d.lincoln@gmail.com', 
-    role = c('aut', 'cre'))
+Authors@R: c(person('Matthew Lincoln',role = c('aut', 'cre'),
+    email = 'matthew.d.lincoln@gmail.com', 
+    comment = c(ORCID = "0000-0002-4387-3384")))
 Description: Given two points in a numeric matrix, find the shortest pathway of 
     evenly spaced points between them. Includes methods for constraining the 
     nearest neighbor search to move in a specific direction, and an interface 
